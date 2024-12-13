@@ -6,7 +6,7 @@ def create_game() -> dict:
             ['_', '_', '_'],
         ],  # could be better board[1, 1]
         'turn': 'X',
-        'counter': 0
+        'counter': 0,
     }
 
 
@@ -37,7 +37,6 @@ def input_square(game, x_or_o):
             print("Invalid input format. Please enter two numbers separated by a space.")
 
 
-
 def check_win(game, x_o: str) -> bool:
     for i in range(3):
         if all(cell == x_o for cell in game['board'][i]):
@@ -57,44 +56,61 @@ def check_tie(game) -> bool:
     return game['counter'] >= 9
 
 
+def start_again():
+    return int(input("do you want a 1 - rematch / 2 - new game/ 3 - end game "))
+
+
+
 def play_x_o():
-    # prepare_game
-    my_game = create_game()
-    x_turn: bool = True
-    # prepare_board ?
+    overall_scores = {'X': 0, 'O': 0}
 
-    # while board_is_not_full and there_is_no_win:
     while True:
-        #   X player, play
-        #   input location - valid: 1. range 1-3/1-3 2. free cell
-        draw_board(my_game)
-        if my_game['turn'] == 'X':
-            my_game['turn'] = 'O'
-            x_play = input_square(my_game, 'X')
-            while x_play == -1:
-                x_play = input_square(my_game, 'X')
-            my_game['counter'] += 1
-            #   check if won ?
-            if check_win(my_game, 'X'):
-                print('X has won the game')
-                break
-            #   board is full (counter == 9), tie
-            if check_tie(my_game):
-                draw_board(my_game)
-                print(" it's a tie")
-                break
-        else:
-            #   O player, play
-            #   input location - valid: 1. range 1-3/1-3 2. free cell
-            my_game['turn'] = 'X'
-            o_play = input_square(my_game, 'O')
-            while o_play == -1:
-                o_play = input_square(my_game, 'O')
-            my_game['counter'] += 1
+        scores = {'X': 0, 'O': 0}  # Reset scores for a new game if not a rematch
+        rematch = False
 
-            #   check if won ?
-            if check_win(my_game, 'O'):
-                print( 'O has won the game')
+        while True:
+            # prepare_game
+            my_game = create_game()
+            # prepare_board ?
+
+            # while board_is_not_full and there_is_no_win:
+            while True:
+                #   X player, play
+                #   input location - valid: 1. range 1-3/1-3 2. free cell
+                draw_board(my_game)
+                player = input_square(my_game, my_game['turn'])
+                while player == -1:
+                    player = input_square(my_game, my_game['turn'])
+                my_game['counter'] += 1
+                #   check if won ?
+                if check_win(my_game, my_game['turn']):
+                    scores[my_game['turn']] += 1
+                    overall_scores[my_game['turn']] += 1
+                    draw_board(my_game)
+                    break
+
+                #   board is full (counter == 9), tie
+                if check_tie(my_game):
+                    draw_board(my_game)
+                    print(" it's a tie")
+                    break
+
+                my_game['turn'] = 'O' if my_game['turn'] == 'X' else 'X'
+
+            print(f"Current Match Scores: X = {scores['X']}, O = {scores['O']}")
+            
+            choice = input("Do you want a rematch? (yes/no): ").strip().lower()
+            if choice != 'yes':
+                rematch = False
+                break
+            rematch = True
+
+        if not rematch:
+            print("Overall Scores:")
+            print(f"X = {overall_scores['X']}, O = {overall_scores['O']}")
+            choice = input("Do you want to start a new game? (yes/no): ").strip().lower()
+            if choice != 'yes':
+                print("Thank you for playing!")
                 break
 
 
