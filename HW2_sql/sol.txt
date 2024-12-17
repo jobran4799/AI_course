@@ -1,0 +1,54 @@
+DELETE FROM shopping WHERE name LIKE 'Orange';
+This removes rows from the shopping table where the name is 'Orange'.
+
+UPDATE shopping SET name = 'Bisli' WHERE name LIKE 'Bamba';
+UPDATE shopping SET amount = 1 WHERE name LIKE 'Milk';
+
+The first query changes the value of the name column to 'Bisli' for rows where the name is 'Bamba'.
+The second query sets the amount column to 1 for rows where the name is 'Milk'.
+
+ALTER TABLE shopping ADD COLUMN maavar INTEGER;
+Adds a new column named maavar of type INTEGER to the shopping table.
+
+UPDATE shopping SET maavar = 6 WHERE id = 1;
+UPDATE shopping SET maavar = 3 WHERE id = 2;
+UPDATE shopping SET maavar = 12 WHERE id = 3;
+UPDATE shopping SET maavar = 8 WHERE id = 4;
+UPDATE shopping SET maavar = 5 WHERE id = 5;
+These update commands set specific values for the maavar column based on the id of each row.
+
+SELECT * FROM shopping WHERE amount > 1 AND maavar > 5;
+SELECT * FROM shopping WHERE maavar BETWEEN 3 AND 5;
+The first query return all rows where the amount is greater than 1 and the maavar is greater than 5.
+The second query retrieves rows where the maavar value is between 3 and 5.
+
+SELECT * FROM shopping ORDER BY maavar;
+SELECT * FROM shopping ORDER BY maavar DESC;
+The first query sorts all rows in the shopping table in ascending order based on the maavar column.
+The second query sorts them in descending order.
+
+CREATE TABLE books (id INTEGER PRIMARY KEY, name TEXT);
+INSERT INTO books VALUES (1, 'SQL PROGRAMMING');
+INSERT INTO books VALUES (2, 'CSHARP PROGRAMMING');
+DELETE FROM books;
+The CREATE TABLE command creates a new table called books with two columns: id (primary key) and name (text).
+The INSERT INTO commands add two rows to the books table.
+The DELETE FROM books command removes all rows from the books table, leaving it empty.
+
+SELECT COUNT(*) FROM shopping;
+SELECT MAX(amount) FROM shopping;
+SELECT AVG(amount) FROM shopping;
+SELECT MIN(amount) FROM shopping;
+COUNT(*): Counts the total number of rows in the shopping table.
+MAX(amount): Finds the maximum value in the amount column.
+AVG(amount): Calculates the average value of the amount column.
+MIN(amount): Finds the minimum value in the amount column.
+
+INSERT INTO shopping VALUES (6, 'Onions', 3, 6);
+INSERT INTO shopping VALUES (7, 'Orio', 1, 8);
+SELECT maavar, COUNT(*) FROM shopping GROUP BY maavar;
+The INSERT INTO commands add two new rows to the shopping table.
+The GROUP BY query groups rows by the maavar column and counts how many rows exist for each unique maavar value.
+
+SELECT id AS "SECRET", name, amount, maavar FROM shopping;
+This query return data from the shopping table, but renames the id column to "SECRET" in the result.
