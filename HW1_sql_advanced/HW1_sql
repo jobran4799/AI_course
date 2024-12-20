@@ -1,0 +1,6 @@
+SELECT exam_year,avg(grade) as average_grade FROM grades GROUP by exam_year
+SELECT student_name,avg(grade) as average_grade from grades WHERE exam_year = 2024 GROUP by student_name
+SELECT exam_year,max(grade) as max_grade,min(grade) as min_grade from grades GROUP by exam_year
+SELECT exam_year, subject_name, COUNT(*) AS exams_count FROM grades GROUP BY exam_year, subject_name
+SELECT subject_name, AVG(grade) AS average_grade FROM grades GROUP BY subject_name HAVING AVG(grade) > 85
+SELECT grade, COUNT(*) AS occurrences FROM grades WHERE grade > 90 GROUP BY grade
