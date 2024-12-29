@@ -1,0 +1,91 @@
+SELECT
+    Employees.name AS employee_name,
+    Departments.name AS department_name,
+    Departments.building,
+    Departments.budget
+FROM Employees
+INNER JOIN Departments
+ON Employees.department_id = Departments.department_id;
+
+SELECT
+    Employees.name AS employee_name,
+    Departments.name AS department_name,
+    Departments.building,
+    Departments.budget
+FROM Employees
+LEFT JOIN Departments
+ON Employees.department_id = Departments.department_id;
+
+SELECT Employees.name AS employee_name
+FROM Employees
+LEFT JOIN Departments
+ON Employees.department_id = Departments.department_id
+WHERE Departments.department_id IS NULL;
+
+SELECT COUNT(*) AS total_employees
+FROM Employees;
+
+SELECT AVG(salary) AS average_salary
+FROM Employees;
+
+SELECT
+    Departments.name AS department_name,
+    Employees.name AS employee_name,
+    MAX(Employees.salary) AS highest_salary
+FROM Employees
+INNER JOIN Departments
+ON Employees.department_id = Departments.department_id
+GROUP BY Departments.name;
+
+SELECT
+    Employees.name AS employee_name,
+    Employees.seniority,
+    Departments.name AS department_name,
+    Departments.building,
+    Departments.budget
+FROM Employees
+LEFT JOIN Departments
+ON Employees.department_id = Departments.department_id
+ORDER BY Employees.seniority ASC;
+
+SELECT seniority, AVG(salary) AS average_salary
+FROM Employees
+GROUP BY seniority;
+
+ALTER TABLE Departments
+ADD COLUMN employee_count INTEGER DEFAULT 0,
+ADD COLUMN average_salary REAL DEFAULT 0,
+ADD COLUMN highest_salary REAL DEFAULT 0,
+ADD COLUMN average_seniority REAL DEFAULT 0;
+
+
+UPDATE Departments
+SET employee_count = (
+    SELECT COUNT(*)
+    FROM Employees
+    WHERE Employees.department_id = Departments.department_id
+);
+
+
+UPDATE Departments
+SET average_salary = (
+    SELECT AVG(salary)
+    FROM Employees
+    WHERE Employees.department_id = Departments.department_id
+);
+
+
+UPDATE Departments
+SET highest_salary = (
+    SELECT MAX(salary)
+    FROM Employees
+    WHERE Employees.department_id = Departments.department_id
+);
+
+
+UPDATE Departments
+SET average_seniority = (
+    SELECT AVG(seniority)
+    FROM Employees
+    WHERE Employees.department_id = Departments.department_id
+);

@@ -1,0 +1,63 @@
+SELECT Lecturers.name AS lecturer_name, Courses.name AS course_name
+From Courses
+INNER JOIN Lecturers
+ON Courses.lecturer_id = Lecturers.lecturer_id;
+
+SELECT Lecturers.name AS lecturer_name, Courses.name AS course_name
+From Courses
+LEFT JOIN Lecturers
+ON Courses.lecturer_id = Lecturers.lecturer_id;
+
+SELECT Lecturers.name AS lecturer_name, Courses.name AS course_name
+FROM Lecturers LEFT JOIN Courses
+ON Lecturers.lecturer_id = Courses.lecturer_id;
+
+SELECT Courses.name AS course_name
+FROM Courses
+LEFT JOIN Lecturers
+ON Courses.lecturer_id = Lecturers.lecturer_id
+WHERE Lecturers.lecturer_id IS NULL;
+
+
+SELECT Courses.name AS course_name, Lecturers.name AS lecturer_name
+FROM Courses
+FULL JOIN Lecturers
+ON Courses.lecturer_id = Lecturers.lecturer_id;
+
+
+SELECT Lecturers.name AS lecturer_name, Courses.name AS course_name
+FROM Lecturers
+FULL JOIN Courses
+ON Lecturers.lecturer_id = Courses.lecturer_id
+WHERE Courses.course_id IS NULL OR Lecturers.lecturer_id IS NULL;
+
+
+SELECT name AS lecturer_name
+FROM Lecturers
+WHERE name LIKE '%i%';
+
+SELECT COUNT(*) AS total_lecturers
+FROM Lecturers;
+
+SELECT COUNT(*) AS total_courses
+FROM Courses;
+
+SELECT COUNT(*) AS total_courses
+FROM Courses;
+
+ALTER TABLE Courses ADD COLUMN weekly_hours INTEGER;
+UPDATE Courses SET weekly_hours = 4 WHERE course_id IN (1, 2, 3);
+UPDATE Courses SET weekly_hours = 6 WHERE course_id IN (4, 5, 6);
+UPDATE Courses SET weekly_hours = 8 WHERE course_id IN (7, 8, 9);
+
+SELECT weekly_hours, COUNT(*) AS course_count
+FROM Courses
+GROUP BY weekly_hours;
+
+SELECT Lecturers.name AS lecturer_name
+FROM Courses JOIN Lecturers
+ON Courses.lecturer_id = Lecturers.lecturer_id
+WHERE Courses.weekly_hours = 8;
+
+DELETE FROM Courses
+WHERE weekly_hours = 4 AND lecturer_id IS NULL;
