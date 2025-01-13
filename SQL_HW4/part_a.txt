@@ -1,0 +1,35 @@
+CREATE TABLE students (
+    student_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    email TEXT
+);
+
+CREATE TABLE courses (
+    course_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    topic TEXT,
+    hours INTEGER
+);
+
+CREATE TABLE grades (
+    student_id INTEGER,
+    course_id INTEGER,
+    grade REAL,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+
+
+INSERT INTO courses (topic, hours) VALUES ('Mathematics', 40);
+INSERT INTO courses (topic, hours) VALUES ('Physics', 30);
+
+
+INSERT INTO grades (student_id, course_id, grade) VALUES (1, 1, 85);
+INSERT INTO grades (student_id, course_id, grade) VALUES (1, 2, 90);
+INSERT INTO grades (student_id, course_id, grade) VALUES (2, 1, 78);
+INSERT INTO grades (student_id, course_id, grade) VALUES (2, 2, 88);
+
+
+SELECT course_id, AVG(grade) AS average_grade
+FROM grades
+GROUP BY course_id;
